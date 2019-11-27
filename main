@@ -1,4 +1,5 @@
 from tkinter import *
+import datetime
 import graph1 as gr
 
 def main():
@@ -8,12 +9,26 @@ def main():
     root.title("Pac - Man.Version: MIPT")
     canv = Canvas(root, bg='white')
     canv.pack(fill=BOTH, expand=10)
+
+    print("Игра началась!")
+    time_0 = datetime.datetime.now()
+
     # Создание лабиринта
     gr.canv = canv
     gr.create_lab()
-    # Нижняя панель с кнопками
+
+    # Нижняя панель с текущим временем игры и кнопками
     frame = Frame(root)
     frame.pack(side=TOP)
+
+    # Вывод времени на экран
+    time = datetime.datetime.now()
+    delta_time = time - time_0
+    displayed_time = StringVar()
+    displayed_time.set("Время игры: " + str(delta_time))
+    time_label = Label(frame, textvariable=displayed_time, width=30)
+    time_label.pack(side=LEFT)
+
     # Кнопка "Up"
     up_button = Button(frame, text=" Up ", height=2)
     up_button.pack(side=TOP)
@@ -26,11 +41,13 @@ def main():
     # Кнопка "Right"
     right_button = Button(frame, text="Right", width=6)
     right_button.pack(side=RIGHT)
+
     # Управление кнопками с клавиатуры
     root.bind("w")
-    canv.bind("s")
-    canv.bind("a")
-    canv.bind("d")
+    root.bind("s")
+    root.bind("a")
+    root.bind("d")
+
     mainloop()
 
 if __name__ == "__main__":
