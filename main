@@ -1,16 +1,37 @@
 from tkinter import *
 import graph1 as gr
 
-root = Tk()
-root.geometry('760x400')
-root.title("Pac - Man.Version: MIPT")
-canv = Canvas(root, bg='white')
-canv.pack(fill=BOTH, expand=10)
-gr.canv = canv
-
 def main():
-    #Создание лабиринта
+    # Главная функция игры
+    root = Tk()
+    root.geometry('760x380')
+    root.title("Pac - Man.Version: MIPT")
+    canv = Canvas(root, bg='white')
+    canv.pack(fill=BOTH, expand=10)
+    # Создание лабиринта
+    gr.canv = canv
     gr.create_lab()
+    # Нижняя панель с кнопками
+    frame = Frame(root)
+    frame.pack(side=TOP)
+    # Кнопка "Up"
+    up_button = Button(frame, text=" Up ", height=2)
+    up_button.pack(side=TOP)
+    # Кнопка "Down"
+    down_button = Button(frame, text="Down", height=2)
+    down_button.pack(side=BOTTOM)
+    # Кнопка "Left"
+    left_button = Button(frame, text="Left", width=6)
+    left_button.pack(side=LEFT)
+    # Кнопка "Right"
+    right_button = Button(frame, text="Right", width=6)
+    right_button.pack(side=RIGHT)
+    # Управление кнопками с клавиатуры
+    root.bind("w")
+    canv.bind("s")
+    canv.bind("a")
+    canv.bind("d")
+    mainloop()
 
 if __name__ == "__main__":
     main()
