@@ -32,4 +32,3 @@ def create_lab():
                           width=0)
 	canv.create_rectangle(600, 40, 640, 240, fill='yellow', outline='black',
                           width=0)
-	mainloop()
