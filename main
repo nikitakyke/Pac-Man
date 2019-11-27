@@ -1,0 +1,16 @@
+from tkinter import *
+import graph1 as gr
+
+root = Tk()
+root.geometry('760x400')
+root.title("Pac - Man.Version: MIPT")
+canv = Canvas(root, bg='white')
+canv.pack(fill=BOTH, expand=10)
+gr.canv = canv
+
+def main():
+    #Создание лабиринта
+    gr.create_lab()
+
+if __name__ == "__main__":
+    main()
