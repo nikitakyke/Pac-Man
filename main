@@ -1,7 +1,7 @@
 from tkinter import *
 import datetime
-import graph1 as gr
-
+import graph2 as gr
+import ball_move as b
 def main():
     # Главная функция игры
     root = Tk()
@@ -16,7 +16,9 @@ def main():
     # Создание лабиринта
     gr.canv = canv
     gr.create_lab()
-
+    """создание шарика"""
+    b.canv = canv
+    new_ball=b.Ball()
     # Нижняя панель с текущим временем игры и кнопками
     frame = Frame(root)
     frame.pack(side=TOP)
@@ -30,20 +32,26 @@ def main():
     time_label.pack(side=LEFT)
 
     # Кнопка "Up"
-    up_button = Button(frame, text=" Up ", height=2)
+    up_button = Button(frame, text=" Up ", height=2,
+							command=new_ball.Button_up)
     up_button.pack(side=TOP)
     # Кнопка "Down"
-    down_button = Button(frame, text="Down", height=2)
+    down_button = Button(frame, text="Down", height=2, 
+						command=new_ball.Button_down)
     down_button.pack(side=BOTTOM)
-    # Кнопка "Left"
-    left_button = Button(frame, text="Left", width=6)
+    #Кнопка "Left"
+    left_button = Button(frame, text="Left", width=6,
+							command=new_ball.Button_left)
     left_button.pack(side=LEFT)
     # Кнопка "Right"
-    right_button = Button(frame, text="Right", width=6)
+    right_button = Button(frame, text="Right", width=6, 
+						command=new_ball.Button_right)
     right_button.pack(side=RIGHT)
 
     # Управление кнопками с клавиатуры
-    root.bind("w")
+    root.bind("w") 
+    """нужно подключить кнопки с клавиатуры 
+    для удобного управления"""
     root.bind("s")
     root.bind("a")
     root.bind("d")
