@@ -2,10 +2,11 @@ from tkinter import *
 import datetime
 import graph as gr
 import ball_move as ball
+
 def main():
     # Главная функция игры
     root = Tk()
-    root.geometry('760x380')
+    root.geometry('760x330')
     root.title("Pac-Man. Version: MIPT")
     canv = Canvas(root, bg='white')
     canv.pack(fill=BOTH, expand=10)
@@ -62,7 +63,13 @@ def main():
     #Движение вправо
     root.bind("d", pacman.Button_right)
     root.bind("<Right>", pacman.Button_right)
-    
+
+    #Вывод очков
+    score = 0
+    label = Label(bg='white', fg='black', width=20)
+    label['text'] = score
+    label.pack()
+
     mainloop()
 
 if __name__ == "__main__":
