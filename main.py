@@ -16,8 +16,8 @@ def main():
     # Создание лабиринта
     gr.canv = canv
     gr.create_lab()
-    # Создание пакмана
     ball.canv = canv
+    # Создание пакмана
     pacman = ball.Pacman()
     # Создание привидений
     ghosts = []
@@ -50,11 +50,19 @@ def main():
     #right_button.pack(side=RIGHT)
 
     # Управление кнопками с клавиатуры
+    #Движение вверх
     root.bind("w", pacman.Button_up)
+    root.bind("<Up>", pacman.Button_up)
+    #Движение вниз
     root.bind("s", pacman.Button_down)
+    root.bind("<Down>", pacman.Button_down)
+    #Движение влево
     root.bind("a", pacman.Button_left)
+    root.bind("<Left>", pacman.Button_left)
+    #Движение вправо
     root.bind("d", pacman.Button_right)
-
+    root.bind("<Right>", pacman.Button_right)
+    
     mainloop()
 
 if __name__ == "__main__":
