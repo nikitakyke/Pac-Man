@@ -33,34 +33,38 @@ class Ball():
                 -20+40*self.y + self.r
         )
         
-    def Button_up(self,event):
+    def Button_up(self, event):
         '''движение вверх при нажатии кнопки ВВЕРХ'''
-        self.v_up = 1 
-        self.v_down = 0
-        self.v_left = 0
-        self.v_right = 0
-        self.move_up()
-    def Button_down(self,event):
+        if not self.walls('up'):
+            self.v_up = 1
+            self.v_down = 0
+            self.v_left = 0
+            self.v_right = 0
+            self.move_up()
+    def Button_down(self, event):
         '''движение вниз при нажатии кнопки ВНИЗ'''
-        self.v_up = 0
-        self.v_down = 1
-        self.v_left = 0
-        self.v_right = 0
-        self.move_down()
-    def Button_left(self,event):
+        if not self.walls('down'):
+            self.v_up = 0
+            self.v_down = 1
+            self.v_left = 0
+            self.v_right = 0
+            self.move_down()
+    def Button_left(self, event):
         '''движение влево при нажатии кнопки ВЛЕВО'''
-        self.v_up = 0
-        self.v_down = 0
-        self.v_left = 1
-        self.v_right = 0
-        self.move_left()
-    def Button_right(self,event):
+        if not self.walls('left'):
+            self.v_up = 0
+            self.v_down = 0
+            self.v_left = 1
+            self.v_right = 0
+            self.move_left()
+    def Button_right(self, event):
         '''движение вправо при нажатии кнопки ВПРАВО'''
-        self.v_up = 0
-        self.v_down = 0
-        self.v_left = 0
-        self.v_right = 1
-        self.move_right()
+        if not self.walls('right'):
+            self.v_up = 0
+            self.v_down = 0
+            self.v_left = 0
+            self.v_right = 1
+            self.move_right()
     
     def walls(self, indication):
         """Функция проверки столкновения со стенками и кубиками, 
@@ -95,7 +99,7 @@ class Ball():
                      check = True
              return check
              
-    """Функции перемещения шарика"""    
+    """Функции перемещения шарика"""
     def move_up(self):
         check = self.walls('up')
         while check == False:
@@ -154,5 +158,5 @@ class Ghost(Ball):
         )
         self.v_up = 0
         self.v_down = 0
-        self.v_left = 0
+        self.v_left = 1
         self.v_right = 0
