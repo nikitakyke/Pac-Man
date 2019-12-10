@@ -1,4 +1,3 @@
-from tkinter import *
 B = []
 class food():
 	global B
