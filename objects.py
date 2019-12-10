@@ -59,7 +59,7 @@ class Ball():
 			self.v_left = 1
 			self.v_right = 0
 			self.move_left()
-	def Button_right(self, ev):
+	def Button_right(self, event):
 		'''движение вправо при нажатии кнопки ВПРАВО'''
 		if self.walls("right") == False:
 			self.v_up = 0
@@ -107,52 +107,53 @@ class Ball():
 		check = self.walls('up')
 		self.check_oval()
 		while check == False:
-			time.sleep(0.13)
 			self.y-=self.v_up  
 			self.check_oval()
 			self.set_coords()
 			canv.update()
 			check = self.walls("up")
+			time.sleep(0.13)
             
 	def move_down(self):
 		check = self.walls('down')
 		self.check_oval()
 		while check == False:
-			time.sleep(0.13)
 			self.y+=self.v_down
 			self.check_oval()
 			self.set_coords()
 			canv.update()
 			check = self.walls("down")
+			time.sleep(0.13)
         
 	def move_left(self):
 		check = self.walls('left')
 		self.check_oval()
 		while check == False:
-			time.sleep(0.13)
 			self.x-=self.v_left
 			self.check_oval()
 			self.set_coords()
 			canv.update()
 			check = self.walls("left")
+			time.sleep(0.13)
 			
 	def move_right(self):
 		check = self.walls('right')
 		self.check_oval()
 		while check == False:
-			time.sleep(0.13)
 			self.x+=self.v_right
 			self.check_oval()
 			self.set_coords()
 			canv.update()
 			check = self.walls("right")
+			time.sleep(0.13)
             
 	def check_oval(self):
 		"""Функция удаления еды"""
 		for k in range (0, len(gr.B)):
 			if self.x == gr.B[k][0] and self.y == gr.B[k][1]:
+				self.record+=10
 				gr.B[k][2].delete()
-				break  
+				gr.B[k] = (0, 0, gr.B[k][2])
 				 
 class Pacman(Ball):
 	"""Создание дочернего класса Pacman"""
@@ -161,10 +162,10 @@ class Pacman(Ball):
 
 class Ghost(Ball):
 	"""Создание дочернего класса Ghost"""
-	def __init__(self):
+	def __init__(self, y):
 		'''начальные значения при создании при создании приведений'''
 		self.x = 19
-		self.y = 7
+		self.y = y
 		self.r = 20
 		self.color = choice(['red','blue','purple'])
 		self.id = canv.create_oval(
@@ -174,11 +175,47 @@ class Ghost(Ball):
 			-20 + 40 * self.y + self.r,
 			fill=self.color
 		)
-		self.v_up = 0
-		self.v_down = 0
-		self.v_left =0
-		self.v_right = 0
-	def angle_x(self):
-		print(pacman.x)
-		#tg_alpha=(pacman.y - self.y)/(pacman.x - self.x)
-		#print(tg_alpha)
+	def ghost_move(self, pacman):
+		self.r_start = ((pacman.x-self.x)**2 + 
+										(pacman.y-self.y)**2)**(0.5)
+		delta_r = [0, 0, 0, 0]
+		if self.walls('up')==True:
+			 delta_r[0] = -100
+		else:
+			delta_r[0] = -((pacman.x-self.x)**2 + 
+							(pacman.y-self.y+1)**2)**(0.5)+ self.r_start
+		if self.walls('down')==True:
+			delta_r[1] = -100
+		else:
+			delta_r[1] = -((pacman.x-self.x)**2 +
+							(pacman.y-self.y-1)**2)**(0.5)+ self.r_start
+		if self.walls('right')==True:
+			delta_r[2] = -100
+		else:
+			delta_r[2] =-((pacman.x-self.x-1)**2 +
+							(pacman.y-self.y)**2)**(0.5)+ self.r_start
+		if self.walls('left')==True:
+			delta_r[3] = -100
+		else:
+			delta_r[3] =-((pacman.x-self.x+1)**2 +
+							(pacman.y-self.y)**2)**(0.5)+ self.r_start
+		
+		if (delta_r[0]>=delta_r[1] and 
+					delta_r[0]>=delta_r[2] and delta_r[0]>=delta_r[3]):
+			self.y-=1
+			self.set_coords()
+		elif (delta_r[1]>=delta_r[0] and 
+					delta_r[1]>=delta_r[2] and delta_r[1]>=delta_r[3]):
+			self.y+=1
+			self.set_coords()
+		elif (delta_r[2]>=delta_r[0] and 
+					delta_r[2]>=delta_r[1] and delta_r[2]>=delta_r[3]):
+			self.x+=1
+			self.set_coords()
+		elif (delta_r[3]>=delta_r[0] and 
+					delta_r[3]>=delta_r[1] and delta_r[3]>=delta_r[2]):
+			self.x-=1
+			self.set_coords()
+		self.distance = ((self.x - pacman.x)**2+
+							(self.y - pacman.y)**2)**(0.5)
+		canv.update()
