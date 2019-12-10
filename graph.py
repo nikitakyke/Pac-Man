@@ -1,30 +1,31 @@
 from tkinter import *
 B = []
 class food():
-		def __init__(self, x, y):
-			self.x = x
-			self.y = y
-			self.r = 7
-			self.color='yellow'
-			self.id = canv.create_oval(
-                -20+40*self.x - self.r,
-                -20+40*self.y - self.r,
-                -20+40*self.x + self.r,
-                -20+40*self.y + self.r,
-                fill=self.color
-				)
-		def set_coords(self):
-			"""Параметры рисования еды"""
-			canv.coords(
-                self.id,
-                -20+40*self.x - self.r,
-                -20+40*self.y - self.r,
-                -20+40*self.x + self.r,
-                -20+40*self.y + self.r
-				)
-		def delete(self):
-			self.r = 0
-			self.set_coords()
+	global B
+	def __init__(self, x, y):
+		self.x = x
+		self.y = y
+		self.r = 7
+		self.color='yellow'
+		self.id = canv.create_oval(
+            -20+40*self.x - self.r,
+            -20+40*self.y - self.r,
+            -20+40*self.x + self.r,
+            -20+40*self.y + self.r,
+            fill=self.color
+			)
+	def set_coords(self):
+		"""Параметры рисования еды"""
+		canv.coords(
+            self.id,
+            -20+40*self.x - self.r,
+            -20+40*self.y - self.r,
+            -20+40*self.x + self.r,
+            -20+40*self.y + self.r
+			)
+	def delete(self):
+		canv.delete(self.id)
+			
 def create_lab():
 	global B
 	"""Создание экрана и лабиринта"""
