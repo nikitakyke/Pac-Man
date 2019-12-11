@@ -8,8 +8,6 @@ root.geometry('760x380')
 root.title("Pac - Man.Version: MIPT")
 canv = Canvas(root, bg='white')
 canv.pack(fill=BOTH, expand=10)
-#массив привидений
-ghosts = []
 #количество привидений
 N_ghost = 1
 
@@ -28,8 +26,10 @@ def new_game():
 	obj.canv = canv
 	print("Игра началась!")
 	"""создание пакмана"""
+	pacman = None
 	pacman = obj.Pacman()
 	live = 3
+	# массив привидений
 	ghosts = []
 	"""создание привидений"""
 	for i in range (N_ghost):
