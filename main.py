@@ -13,11 +13,7 @@ obj.canv = canv
 #количество привидений
 N_ghost = 1
 
-#Вывод очков
-label = Label(bg='white', fg='black', width=20)
 score = 0
-label['text'] = score
-label.pack()
 live = 0
 
 def start():
@@ -25,15 +21,18 @@ def start():
 	canv.delete("all")
 	frame = Frame(root)
 	frame.pack(side=BOTTOM)
-	start_button = Button(frame, text="Start", command=new_game, width=6)
-	start_button.pack(side=RIGHT)
+	live1_button = Button(frame, text="Start", command=new_game, width=6)
+	live1_button.pack(side=RIGHT)
 
 def new_game():
-	global live, ghosts, pacman
+	global live, ghosts, pacman, label
 	# Главная функция игры
 	# Создание лабиринта
 	gr.create_lab()
-
+	# Вывод очков
+	label = Label(bg='white', fg='black', width=20)
+	label['text'] = score
+	label.pack()
 	print("Игра началась!")
 	"""создание Pacman"""
 	pacman = None
@@ -62,9 +61,10 @@ def new_game():
 	root.bind("d", pacman.Button_right)
 	root.bind("<Right>", pacman.Button_right)
 
-# Вывод времени на экран
+	game()
+
 def game():
-	global live
+	global live, label
 	for i in range(0,N_ghost, 1):
 		ghosts[i].ghost_move(pacman)
 		if ghosts[i].distance < 0.01:
