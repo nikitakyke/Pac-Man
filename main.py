@@ -10,23 +10,96 @@ canv = Canvas(root, bg='white')
 canv.pack(fill=BOTH, expand=10)
 gr.canv = canv
 obj.canv = canv
-#количество привидений
-N_ghost = 1
 
 score = 0
-live = 0
 
 def start():
-	print("Выберите количество привидений и жизней Pacman")
+	global level1_button, level2_button, level3_button, level4_button, level5_button, frame
+	print("Выберите уровень игры")
 	canv.delete("all")
+	# Нижняя панель с кнопками
 	frame = Frame(root)
 	frame.pack(side=BOTTOM)
-	live1_button = Button(frame, text="Start", command=new_game, width=6)
-	live1_button.pack(side=RIGHT)
+	#Кнопки, соответствующие уровням игры
+	level5_button = Button(frame, text="5", command=level5, width=6)
+	level5_button.pack(side=RIGHT)
+	level4_button = Button(frame, text="4", command=level4, width=6)
+	level4_button.pack(side=RIGHT)
+	level3_button = Button(frame, text="3", command=level3, width=6)
+	level3_button.pack(side=RIGHT)
+	level2_button = Button(frame, text="2", command=level2, width=6)
+	level2_button.pack(side=RIGHT)
+	level1_button = Button(frame, text="1", command=level1, width=6)
+	level1_button.pack(side=RIGHT)
+
+def level1():
+	global live, N_ghost
+	live = 3
+	# количество привидений
+	N_ghost = 1
+	#Удаление всех кнопок функкии start()
+	level1_button.destroy()
+	level2_button.destroy()
+	level3_button.destroy()
+	level4_button.destroy()
+	level5_button.destroy()
+	new_game()
+
+def level2():
+	global live, N_ghost
+	live = 3
+	# количество привидений
+	N_ghost = 2
+	# Удаление всех кнопок функкии start()
+	level1_button.destroy()
+	level2_button.destroy()
+	level3_button.destroy()
+	level4_button.destroy()
+	level5_button.destroy()
+	new_game()
+
+def level3():
+	global live, N_ghost
+	live = 2
+	# количество привидений
+	N_ghost = 3
+	# Удаление всех кнопок функкии start()
+	level1_button.destroy()
+	level2_button.destroy()
+	level3_button.destroy()
+	level4_button.destroy()
+	level5_button.destroy()
+	new_game()
+
+def level4():
+	global live, N_ghost
+	live = 2
+	# количество привидений
+	N_ghost = 4
+	# Удаление всех кнопок функкии start()
+	level1_button.destroy()
+	level2_button.destroy()
+	level3_button.destroy()
+	level4_button.destroy()
+	level5_button.destroy()
+	new_game()
+
+def level5():
+	global live, N_ghost
+	live = 1
+	# количество привидений
+	N_ghost = 5
+	# Удаление всех кнопок функкии start()
+	level1_button.destroy()
+	level2_button.destroy()
+	level3_button.destroy()
+	level4_button.destroy()
+	level5_button.destroy()
+	new_game()
 
 def new_game():
-	global live, ghosts, pacman, label
-	# Главная функция игры
+	""""Функция новой игры"""
+	global live, ghosts, pacman, label, live1_button, live2_button, live3_button, frame
 	# Создание лабиринта
 	gr.create_lab()
 	# Вывод очков
@@ -44,9 +117,6 @@ def new_game():
 	for i in range (N_ghost):
 		new_ghost=obj.Ghost(7 - (i%6))
 		ghosts += [new_ghost]
-	# Нижняя панель с текущим временем игры и кнопками
-	frame = Frame(root)
-	frame.pack(side=BOTTOM)
 	#Управление кнопками с клавиатуры
 	#Движение вверх
 	root.bind("w", pacman.Button_up)
@@ -72,8 +142,7 @@ def game():
 			screen = canv.create_text(380, 300, text = 'Game over!', font = '28')
 			canv.update()
 			time.sleep(3)
-			new_game()
-			game()
+			start()
 		#счет очков и вывод на экран
 		score = pacman.record
 		label['text'] = score
@@ -81,12 +150,10 @@ def game():
 			screen = canv.create_text(380, 300, text = 'Victory!', font = '28')
 			canv.update()
 			time.sleep(3)
-			new_game()
-			game()
+			start()
 	root.after(300, game)
-start()
-#game()
 
+start()
 mainloop()
 
 if __name__ == "__main__":
