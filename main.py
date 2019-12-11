@@ -8,6 +8,8 @@ root.geometry('760x380')
 root.title("Pac - Man.Version: MIPT")
 canv = Canvas(root, bg='white')
 canv.pack(fill=BOTH, expand=10)
+gr.canv = canv
+obj.canv = canv
 #количество привидений
 N_ghost = 1
 
@@ -17,15 +19,23 @@ score = 0
 label['text'] = score
 label.pack()
 live = 0
+
+def start():
+	print("Выберите количество привидений и жизней Pacman")
+	canv.delete("all")
+	frame = Frame(root)
+	frame.pack(side=BOTTOM)
+	start_button = Button(frame, text="Start", command=new_game, width=6)
+	start_button.pack(side=RIGHT)
+
 def new_game():
 	global live, ghosts, pacman
 	# Главная функция игры
 	# Создание лабиринта
-	gr.canv = canv
 	gr.create_lab()
-	obj.canv = canv
+
 	print("Игра началась!")
-	"""создание пакмана"""
+	"""создание Pacman"""
 	pacman = None
 	pacman = obj.Pacman()
 	live = 3
@@ -57,8 +67,8 @@ def game():
 	global live
 	for i in range(0,N_ghost, 1):
 		ghosts[i].ghost_move(pacman)
-		if ghosts[i].distance<0.01:
-			live-=1
+		if ghosts[i].distance < 0.01:
+			live -= 1
 			screen = canv.create_text(380, 300, text = 'Game over!', font = '28')
 			canv.update()
 			time.sleep(3)
@@ -74,10 +84,10 @@ def game():
 			new_game()
 			game()
 	root.after(300, game)
-new_game()
-game()
+start()
+#game()
 
 mainloop()
 
 if __name__ == "__main__":
-	new_game()
+	start()
