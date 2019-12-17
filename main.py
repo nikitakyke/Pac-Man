@@ -21,7 +21,7 @@ def start():
 	global level1_button, level2_button, level3_button, level4_button, level5_button, frame, background_label
 	print("Выберите уровень игры")
 	canv.delete("all")
-	image = PhotoImage(file ="C:\\Users\\асус\\Desktop\\Информатика\\команда\\27\\pacman.gif")
+	image = PhotoImage(file ="pacman.gif")
 	background_label = Label(root, image=image)
 	"""relheight = 0,925 - коэффициент рястяжения изображения"""
 	background_label.place(x=0, y=0, relwidth=1, relheight=0.925) 
