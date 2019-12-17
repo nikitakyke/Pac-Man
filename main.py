@@ -11,29 +11,33 @@ canv.pack(fill=BOTH, expand=10)
 gr.canv = canv
 obj.canv = canv
 
+# Нижняя панель с кнопками
+frame = Frame(root)
+frame.pack(side=BOTTOM)
 score = 0
 
+label = Label(bg='white', fg='black', width=20)
+
 def start():
-	global level1_button, level2_button, level3_button, level4_button, level5_button, frame
+	global level1_button, level2_button, level3_button, level4_button, level5_button, frame, score
 	print("Выберите уровень игры")
 	canv.delete("all")
-	# Нижняя панель с кнопками
-	frame = Frame(root)
-	frame.pack(side=BOTTOM)
 	#Кнопки, соответствующие уровням игры
 	level5_button = Button(frame, text="5", command=level5, width=6)
-	level5_button.pack(side=RIGHT)
 	level4_button = Button(frame, text="4", command=level4, width=6)
-	level4_button.pack(side=RIGHT)
 	level3_button = Button(frame, text="3", command=level3, width=6)
-	level3_button.pack(side=RIGHT)
 	level2_button = Button(frame, text="2", command=level2, width=6)
-	level2_button.pack(side=RIGHT)
 	level1_button = Button(frame, text="1", command=level1, width=6)
+
+	level5_button.pack(side=RIGHT)
+	level4_button.pack(side=RIGHT)
+	level3_button.pack(side=RIGHT)
+	level2_button.pack(side=RIGHT)
 	level1_button.pack(side=RIGHT)
+	mainloop()
 
 def level1():
-	global live, N_ghost
+	global live, N_ghost, level1_button, level2_button, level3_button, level4_button, level5_button
 	live = 3
 	# количество привидений
 	N_ghost = 1
@@ -103,8 +107,8 @@ def new_game():
 	# Создание лабиринта
 	gr.create_lab()
 	# Вывод очков
-	label = Label(bg='white', fg='black', width=20)
-	label['text'] = score
+
+	#label['text'] = score
 	label.pack()
 	print("Игра началась!")
 	"""создание Pacman"""
@@ -135,22 +139,24 @@ def new_game():
 
 def game():
 	global live, label
-	for i in range(0,N_ghost, 1):
+	#while pacman.record < 910:
+	for i in range(0, N_ghost, 1):
 		ghosts[i].ghost_move(pacman)
 		if ghosts[i].distance < 0.01:
 			live -= 1
-			screen = canv.create_text(380, 300, text = 'Game over!', font = '28')
-			canv.update()
-			time.sleep(3)
-			start()
-		#счет очков и вывод на экран
-		score = pacman.record
-		label['text'] = score
-		if pacman.record == 50:
-			screen = canv.create_text(380, 300, text = 'Victory!', font = '28')
-			canv.update()
-			time.sleep(3)
-			start()
+			if live == 0:
+				screen = canv.create_text(380, 300, text = 'Game over!', font = '28')
+				canv.update()
+				time.sleep(3)
+				start()
+	if pacman.record >= 910:
+		screen = canv.create_text(380, 300, text='Victory!', font='28')
+		canv.update()
+		time.sleep(3)
+		start()
+	#счет очков и вывод на экран
+	score = pacman.record
+	label['text'] = score
 	root.after(300, game)
 
 start()
